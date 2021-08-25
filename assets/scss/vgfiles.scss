@@ -5,16 +5,18 @@
 		font-size: 14px;
 	}
 
-	&__icon {
-		display: inline-flex;
-		margin-right: 10px;
-		font-size: 14px;
-		border-radius: 50%;
-		width: 25px;
-		height: 25px;
-		border: 1px solid #969696;
-		align-items: center;
-		justify-content: center;
+	&-input {
+		&__icon {
+			display: inline-flex;
+			margin-right: 10px;
+			font-size: 14px;
+			border-radius: 50%;
+			width: 25px;
+			height: 25px;
+			border: 1px solid #969696;
+			align-items: center;
+			justify-content: center;
+		}
 	}
 
 	&__info {
@@ -25,6 +27,12 @@
 		margin-left: 36px;
 		padding-top: 10px;
 		border-top: 1px solid #e0e0e0;
+
+		&--wrapper {
+			display: flex;
+			color: darkgreen;
+			font-weight: 600;
+		}
 
 		&--count {
 			font-weight: 600;

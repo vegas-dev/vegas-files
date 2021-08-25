@@ -28,7 +28,7 @@ window.VegasFiles = {
     }
 
     if (append_files.length) {
-      $file_info.fadeIn().css('display', 'inline-block');
+      $file_info.fadeIn().css('display', 'block');
       $file_info.find(this.container + '__info--count').html(append_files.length + '<span>[' + this.getSizes(append_files, true) + ']</span>');
 
       for (var i = 0; i <= append_files.length - 1; i++) {
@@ -68,19 +68,21 @@ window.VegasFiles = {
     var output = 0;
 
     if (size_kb <= 1024) {
-      output = size_kb.toFixed(3) + ' кб';
+      output = size_kb.toFixed(3) + ' Kb';
     } else if (size_kb >= 1024 && size_mb <= 1024) {
-      output = size_mb.toFixed(3) + ' мб';
+      output = size_mb.toFixed(3) + ' Mb';
     } else if (size_mb >= 1024 && size_gb <= 1024) {
-      output = size_gb.toFixed(3) + ' гб';
+      output = size_gb.toFixed(3) + ' Gb';
     } else {
-      output = size_tb.toFixed(3) + ' тб';
+      output = size_tb.toFixed(3) + ' Tb';
     }
 
     if (array) {
-      output = size.map(el => {
-        return el.size++;
-      }).reduce((a, b) => {
+      var arrSizes = [];
+      $.map(size, function (el) {
+        arrSizes.push(el.size);
+      });
+      output = arrSizes.reduce(function (a, b) {
         return a + b;
       });
       output = VegasFiles.getSizes(output);
@@ -89,8 +91,6 @@ window.VegasFiles = {
     return output;
   }
 };
-$(document).on('ready', function () {//VegasFiles.init();
-});
 $(document).on('change', '[data-toggle=vg-files]', function () {
   VegasFiles.change($(this));
   return false;

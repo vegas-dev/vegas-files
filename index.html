@@ -7,7 +7,7 @@
 	<title>vegas files</title>
 	<link rel="shortcut icon" href="favicon.ico">
 	<!-- Main css -->
-	<link href="//vegas-dev.github.io/vegas-files/dist/css/vgfiles.css" rel="stylesheet" type="text/css">
+	<link href="/dist/css/vgfiles.css" rel="stylesheet" type="text/css">
 	<!-- tmpl css -->
 	<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.18.1/styles/default.min.css">
 	<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.18.1/styles/github.min.css">
@@ -37,7 +37,7 @@
 					<a href="http://www.opensource.org/licenses/mit-license" target="_blank"><img src="https://img.shields.io/npm/l/vgfiles.svg?style=flat-square"></a>
 				</h1>
 				<p>
-					Styling the standard file selection on a form
+					Styling the standard file selection on a form. Uses the JQuery library
 				</p>
 
 				<ul class="main-links">
@@ -48,24 +48,26 @@
 
 				<h3 class="mt-4">Demo</h3>
 				<form action="#" method="post">
-					<div class="vg-files">
-						<label for="vg-files-input">
-							<span>
-								<span class="vg-files__icon"><i class="fal fa-plus"></i></span>
-								<span>Choice Files</span>
-							</span>
-						</label>
-						<div class="vg-dropdown vg-files__info">
-							<a href="#" data-toggle="vg-dropdown" data-width="320px">
-								Files uploaded: <span class="vg-files__info--count"></span>
-							</a>
-							<a href="#" class="vg-files__dismiss" data-dismiss="vg-files">Reset</a>
-							<div class="vg-dropdown-content">
-								<ul class="vg-files__info--name"></ul>
+					<div class="row">
+						<div class="col-lg-4 col-md-6">
+							<div class="vg-files">
+								<label for="vg-files-input">
+									<span>
+										<span class="vg-files-input__icon">+</span>
+										<span class="vg-files-input__title">Choice Files</span>
+									</span>
+								</label>
+								<div class="vg-files__info">
+									<div class="vg-files__info--wrapper">
+										<div>Files uploaded: <span class="vg-files__info--count"></span></div>
+										<div><a href="#" class="vg-files__dismiss" data-dismiss="vg-files">Reset</a></div>
+									</div>
+									<ul class="vg-files__info--name"></ul>
+								</div>
+
+								<input type="file" name="files[]" id="vg-files-input" data-toggle="vg-files" multiple>
 							</div>
 						</div>
-
-						<input type="file" name="files[]" id="vg-files-input" data-toggle="vg-files" multiple>
 					</div>
 				</form>
 				
@@ -90,18 +92,16 @@
 &lt;div class="vg-files"&gt;
 	&lt;label for="vg-files-input"&gt;
 		&lt;span&gt;
-			&lt;span class="vg-files__icon"&gt;&lt;i class="fal fa-plus"&gt;&lt;/i&gt;&lt;/span&gt;
-			&lt;span&gt;Choice Files&lt;/span&gt;
+			&lt;span class="vg-files-input__icon"&gt;+&lt;/span&gt;
+			&lt;span class="vg-files-input__title"&gt;Choice Files&lt;/span&gt;
 		&lt;/span&gt;
 	&lt;/label&gt;
-	&lt;div class="vg-dropdown vg-files__info"&gt;
-		&lt;a href="#" data-toggle="vg-dropdown" data-width="320px"&gt;
-			Files uploaded: &lt;span class="vg-files__info--count"&gt;&lt;/span&gt;
-		&lt;/a&gt;
-		&lt;a href="#" class="vg-files__dismiss" data-dismiss="vg-files"&gt;Reset&lt;/a&gt;
-			&lt;div class="vg-dropdown-content"&gt;
-				&lt;ul class="vg-files__info--name"&gt;&lt;/ul&gt;
-			&lt;/div&gt;
+	&lt;div class="vg-files__info"&gt;
+		&lt;div class="vg-files__info--wrapper"&gt;
+			&lt;div&gt;Files uploaded: &lt;span class="vg-files__info--count"&gt;&lt;/span&gt;&lt;/div&gt;
+			&lt;div&gt;&lt;a href="#" class="vg-files__dismiss" data-dismiss="vg-files"&gt;Reset&lt;/a&gt;&lt;/div&gt;
+		&lt;/div&gt;
+		&lt;ul class="vg-files__info--name"&gt;&lt;/ul&gt;
 	&lt;/div&gt;
 
 	&lt;input type="file" name="files[]" id="vg-files-input" data-toggle="vg-files" multiple&gt;
@@ -123,12 +123,12 @@
 			</div>
 		</div>
 	</div>
-	
-	<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 	<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.18.1/highlight.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.18.1/languages/javascript.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.18.1/languages/css.min.js"></script>
-	<script src="https://vegas-dev.github.io/vegas-files/dist/js/vgfiles.min.js"></script>
+	<script src="/dist/js/vgfiles.js"></script>
 	<script>
 		hljs.initHighlightingOnLoad();
 	</script>
