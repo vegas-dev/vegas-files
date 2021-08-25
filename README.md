@@ -4,7 +4,7 @@ Styling the standard file selection on a form
 [![npm](https://img.shields.io/npm/v/vgfiles.svg?style=flat-square&maxAge=600)](https://www.npmjs.com/package/vgnav) [![npm](https://img.shields.io/npm/l/vgnav.svg?style=flat-square)]()
 
 ## DEMO & DOCUMENTATION
-Demo version of the script and its description can be found [here](https://vegas-dev.github.io/vegas-vgfiles/)
+Demo version of the script and its description can be found [here](https://vegas-dev.github.io/vegas-files/)
 
 ## Install
 ```
