@@ -16,6 +16,8 @@ window.VegasFiles = {
         $file_info = $container.find(this.container + '__info'),
         $file_info_name = $file_info.find(this.container + '__info--name'),
         values = $self[0].files,
+        id = $container.find('label').attr('for'),
+        accept = 'accept="' + $self.attr('accept') + '"' || '',
         append_files = [];
     $file_info_name.find('li').remove();
 
@@ -23,7 +25,7 @@ window.VegasFiles = {
       $self.removeAttr('id');
       $self.removeAttr('data-toggle');
       $self.addClass('vg-files__fake');
-      $container.append('<input type="file" name="files[]" id="vg-files-input" data-toggle="vg-files" multiple>');
+      $container.append('<input type="file" name="files[]" id="' + id + '" data-toggle="vg-files" ' + accept + ' multiple>');
       append_files = this.append(values);
     }
 
