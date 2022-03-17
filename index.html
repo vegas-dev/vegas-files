@@ -50,7 +50,7 @@
 				<form action="#" method="post">
 					<div class="row">
 						<div class="col-lg-4 col-md-6">
-							<div class="vg-files">
+							<div class="vg-files" data-image-preview="true">
 								<label for="vg-files-inputsdfsdf">
 									<span>
 										<span class="vg-files-input__icon">+</span>
@@ -58,6 +58,7 @@
 									</span>
 								</label>
 								<div class="vg-files__info">
+									<div class="vg-files__info--image"></div>
 									<div class="vg-files__info--wrapper">
 										<div>Files uploaded: <span class="vg-files__info--count"></span></div>
 										<div><a href="#" class="vg-files__dismiss" data-dismiss="vg-files">Reset</a></div>
@@ -65,7 +66,7 @@
 									<ul class="vg-files__info--name"></ul>
 								</div>
 
-								<input type="file" name="files[]" id="vg-files-inputsdfsdf" data-toggle="vg-files" accept="image/jpeg,image/png,image/gif" multiple>
+								<input type="file" name="files[]" id="vg-files-inputsdfsdf" data-toggle="vg-files" multiple>
 							</div>
 						</div>
 					</div>
@@ -128,7 +129,7 @@
 	<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.18.1/highlight.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.18.1/languages/javascript.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.18.1/languages/css.min.js"></script>
-	<script src="/dist/js/vgfiles.js"></script>
+	<script src="//vegas-dev.github.io/vegas-files/dist/js/vgfiles.js"></script>
 	<script>
 		hljs.initHighlightingOnLoad();
 	</script>

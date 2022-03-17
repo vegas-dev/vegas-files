@@ -1,3 +1,7 @@
+# VEGAS-FILES 1.0.2 (MART 17, 2022)
+* Preview of the image, optionally, via the date attribute
+* fixed bugs
+
 # VEGAS-FILES 1.0.1 (DEC 29, 2021)
 * Accept mime-types
 * fixed bugs

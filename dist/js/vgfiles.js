@@ -6,20 +6,26 @@ window.VegasFiles = {
     limits: {
       count: 0,
       sizes: 0
-    }
+    },
+    image: false,
+    types: ['image/png', "image/jpeg", "image/bmp", "image/ico", "image/gif", "image/jfif", "image/tiff"]
   },
   files: [],
   fileList: [],
-  init: function init() {},
+  init: function init($self) {
+    VegasFiles.defaults.image = $self.data('image-preview') || false;
+  },
   change: function change($self) {
     var $container = $self.closest(this.container),
         $file_info = $container.find(this.container + '__info'),
         $file_info_name = $file_info.find(this.container + '__info--name'),
+        $file_info_image = $file_info.find(this.container + '__info--image'),
         values = $self[0].files,
         id = $container.find('label').attr('for'),
         accept = 'accept="' + $self.attr('accept') + '"' || '',
         append_files = [];
     $file_info_name.find('li').remove();
+    $file_info_image.find('span').remove();
 
     if (values.length) {
       $self.removeAttr('id');
@@ -34,6 +40,13 @@ window.VegasFiles = {
       $file_info.find(this.container + '__info--count').html(append_files.length + '<span>[' + this.getSizes(append_files, true) + ']</span>');
 
       for (var i = 0; i <= append_files.length - 1; i++) {
+        if (VegasFiles.defaults.image) {
+          if (this.checkType(append_files[i].type)) {
+            var src = URL.createObjectURL(append_files[i]);
+            $file_info_image.append('<span><img src="' + src + '" alt="#"></span>');
+          }
+        }
+
         var size = this.getSizes(append_files[i].size);
         $file_info_name.append('<li><span>' + (i + 1) + '.</span><span>' + append_files[i].name + '</span><span>[' + size + ']</span></li>');
       }
@@ -53,13 +66,8 @@ window.VegasFiles = {
 
     return arr;
   },
-  clear: function clear($self) {
-    var $container = $self.closest(this.container);
-    $container.find(this.container + '__fake').remove();
-    $container.find(this.container + '__info').fadeOut();
-    $container.find(this.container + '__info--name li').remove();
-    this.files = [];
-    return false;
+  checkType: function checkType(type) {
+    return VegasFiles.defaults.types.includes(type);
   },
   getSizes: function getSizes(size) {
     var array = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
@@ -91,8 +99,26 @@ window.VegasFiles = {
     }
 
     return output;
+  },
+  clear: function clear($self) {
+    var $container = $self.closest(this.container);
+    $container.find(this.container + '__fake').remove();
+    $container.find(this.container + '__info').fadeOut();
+    $container.find(this.container + '__info--name li').remove();
+    $container.find(this.container + '__info--image span').remove();
+    this.files = [];
+    return false;
   }
 };
+$(document).ready(function () {
+  var $container = $('.vg-files');
+
+  if ($container.length) {
+    $container.each(function () {
+      VegasFiles.init($(this));
+    });
+  }
+});
 $(document).on('change', '[data-toggle=vg-files]', function () {
   VegasFiles.change($(this));
   return false;
