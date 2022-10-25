@@ -1,4 +1,8 @@
-# VEGAS-FILES 1.0.2 (MART 17, 2022)
+# VEGAS-FILES 1.0.3 (OKTOBER 25, 2022)
+* Added a limit on the number of uploaded files
+* fixed bugs
+
+* # VEGAS-FILES 1.0.2 (MART 17, 2022)
 * Preview of the image, optionally, via the date attribute
 * fixed bugs
 
