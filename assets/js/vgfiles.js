@@ -12,6 +12,9 @@ window.VegasFiles = {
 	fileList: [],
 
 	init: function ($self) {
+		VegasFiles.defaults.limits.count = $self.data('count') || VegasFiles.defaults.limits.count;
+		VegasFiles.defaults.limits.size = $self.data('size') || VegasFiles.defaults.limits.size;
+
 		VegasFiles.defaults.image = $self.data('image-preview') || false;
 	},
 	change: function ($self) {
@@ -59,14 +62,30 @@ window.VegasFiles = {
 	append: function (files) {
 		this.files.push(files);
 
-		let arr = [];
-		for (let i = 0; i <= this.files.length -1; i++) {
-			$.map(this.files[i], function (file) {
-				arr.push(file);
-			});
-		}
+		return pushFiles(this.files, VegasFiles.defaults.limits.count);
 
-		return arr;
+		function pushFiles (files, limit) {
+			let arr = [];
+			for (let i = 0; i <= files.length -1; i++) {
+				$.map(files[i], function (file, cnt) {
+					let count = cnt + 1;
+
+					if (limit === 0) {
+						arr.push(file);
+					} else {
+						if (count <= limit) {
+							arr.unshift(file);
+						}
+					}
+				});
+			}
+
+			if (limit > 0 && arr.length > limit) {
+				arr.splice(limit, arr.length - limit)
+			}
+
+			return arr;
+		}
 	},
 
 	checkType: function (type) {
