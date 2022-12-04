@@ -34,7 +34,10 @@ window.VegasFiles = {
 			$self.removeAttr('id');
 			$self.removeAttr('data-toggle');
 			$self.addClass('vg-files__fake');
-			$container.append('<input type="file" name="files[]" id="'+ id +'" data-toggle="vg-files" ' + accept + ' multiple>');
+
+			if( VegasFiles.defaults.limits.count === 0) {
+				$container.append('<input type="file" name="files[]" id="'+ id +'" data-toggle="vg-files" ' + accept + ' multiple>');
+			}
 
 			append_files = this.append(values);
 		}
