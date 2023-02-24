@@ -14,7 +14,6 @@ window.VegasFiles = {
 	init: function ($self) {
 		VegasFiles.defaults.limits.count = $self.data('count') || VegasFiles.defaults.limits.count;
 		VegasFiles.defaults.limits.size = $self.data('size') || VegasFiles.defaults.limits.size;
-
 		VegasFiles.defaults.image = $self.data('image-preview') || false;
 	},
 	change: function ($self) {
@@ -31,11 +30,11 @@ window.VegasFiles = {
 		$file_info_image.find('span').remove();
 
 		if (values.length) {
-			$self.removeAttr('id');
-			$self.removeAttr('data-toggle');
-			$self.addClass('vg-files__fake');
+			if (VegasFiles.defaults.limits.count !== 1) {
+				$self.removeAttr('id');
+				$self.removeAttr('data-toggle');
+				$self.addClass('vg-files__fake');
 
-			if( VegasFiles.defaults.limits.count === 0) {
 				$container.append('<input type="file" name="files[]" id="'+ id +'" data-toggle="vg-files" ' + accept + ' multiple>');
 			}
 
@@ -69,7 +68,7 @@ window.VegasFiles = {
 
 		function pushFiles (files, limit) {
 			let arr = [];
-			for (let i = 0; i <= files.length -1; i++) {
+			for (let i = 0; i <= files.length - 1; i++) {
 				$.map(files[i], function (file, cnt) {
 					let count = cnt + 1;
 
@@ -84,7 +83,7 @@ window.VegasFiles = {
 			}
 
 			if (limit > 0 && arr.length > limit) {
-				arr.splice(limit, arr.length - limit)
+				arr.splice(limit, arr.length - limit);
 			}
 
 			return arr;
@@ -132,6 +131,7 @@ window.VegasFiles = {
 	clear: function ($self) {
 		let $container = $self.closest(this.container);
 
+		$container.find('[type="file"]').val('');
 		$container.find(this.container + '__fake').remove();
 		$container.find(this.container + '__info').fadeOut();
 		$container.find(this.container + '__info--name li').remove();

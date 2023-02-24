@@ -1,6 +1,6 @@
 {
 	"name": "vgfiles",
-	"version": "1.0.4",
+	"version": "1.0.7",
 	"author": {
 		"name": "Vegas Studio",
 		"url": "https://vegas-dev.com",
@@ -28,7 +28,6 @@
 		"@babel/preset-env": "^7.11.5",
 		"babel-preset-minify": "^0.5.1",
 		"mkdirp": "^0.5.1",
-		"node-sass": "^4.14.1",
 		"npm-run-all": "^2.1.1",
 		"onchange": "^2.4.0",
 		"rimraf": "^2.5.4"

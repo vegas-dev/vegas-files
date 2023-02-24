@@ -30,11 +30,10 @@ window.VegasFiles = {
     $file_info_image.find('span').remove();
 
     if (values.length) {
-      $self.removeAttr('id');
-      $self.removeAttr('data-toggle');
-      $self.addClass('vg-files__fake');
-
-      if (VegasFiles.defaults.limits.count === 0) {
+      if (VegasFiles.defaults.limits.count !== 1) {
+        $self.removeAttr('id');
+        $self.removeAttr('data-toggle');
+        $self.addClass('vg-files__fake');
         $container.append('<input type="file" name="files[]" id="' + id + '" data-toggle="vg-files" ' + accept + ' multiple>');
       }
 
@@ -124,6 +123,7 @@ window.VegasFiles = {
   },
   clear: function clear($self) {
     var $container = $self.closest(this.container);
+    $container.find('[type="file"]').val('');
     $container.find(this.container + '__fake').remove();
     $container.find(this.container + '__info').fadeOut();
     $container.find(this.container + '__info--name li').remove();
