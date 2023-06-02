@@ -1,20 +1,21 @@
-# vegas-files
-Styling the standard file selection on a form
+# vegas-rollup
+Hides/Shows the hidden part of the content
 
-[![npm](https://img.shields.io/npm/v/vgfiles.svg?style=flat-square&maxAge=600)](https://www.npmjs.com/package/vgnav) [![npm](https://img.shields.io/npm/l/vgnav.svg?style=flat-square)]()
+[![npm](https://img.shields.io/npm/v/vgrollup.svg?style=flat-square&maxAge=600)](https://www.npmjs.com/package/vgrollup) [![npm](https://img.shields.io/npm/l/vgrollup.svg?style=flat-square)]()
 
-## DEMO & DOCUMENTATION
-Demo version of the script and its description can be found [here](https://vegas-dev.github.io/vegas-files/)
+## Demo
+https://vegas-dev.github.io/vegas-rollup/
 
 ## Install
 ```
-npm i vgfiles
+npm i vgrollup
 ```
 
-or download [here](https://github.com/vegas-dev/vegas-vgfiles/archive/master.zip)
+or download [here](https://github.com/vegas-dev/vegas-rollup/archive/master.zip)
 
 ## Authors
-[VEGAS STUDIO](https://vegas-dev.com)
+
+[VEGAS STUDIO](https://vegas-dev.com)  Russia
 
 ## License
 Is published under the [MIT license](http://www.opensource.org/licenses/mit-license)

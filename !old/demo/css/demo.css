@@ -4,8 +4,13 @@ body {
 	font-family: Roboto, sans-serif;
 }
 
+ul, ol {
+	list-style: none;
+	padding-left: 15px;
+}
+
 .wrapper {
-	width: 1400px;
+	width: 95%;
 	margin: 15px auto;
 	background: #ffffff;
 	background-size: cover;
