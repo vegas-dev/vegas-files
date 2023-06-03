@@ -131,7 +131,7 @@ class VGFiles {
 	setImages(files) {
 		let _this = this;
 
-		if(_this.settings.isImage) {
+		if (_this.settings.isImage) {
 			const $fileInfo = _this.container.querySelector('.' + _this.classes.info);
 			if ($fileInfo) {
 				let $selector = document.createElement('div');
@@ -139,7 +139,7 @@ class VGFiles {
 				$fileInfo.prepend($selector);
 
 				for (const file of files) {
-					if(this.checkType(file.type)) {
+					if (this.checkType(file.type)) {
 						let src = URL.createObjectURL(file);
 						$selector.insertAdjacentHTML('beforeEnd', '<span><img src="'+ src +'" alt="#"></span>');
 					}
@@ -151,7 +151,7 @@ class VGFiles {
 	setInfoList(files) {
 		let _this = this;
 
-		if(_this.settings.isInfo) {
+		if (_this.settings.isInfo) {
 			const $fileInfo = _this.container.querySelector('.' + _this.classes.info);
 			if ($fileInfo) {
 				let $selector = document.createElement('div');
@@ -217,7 +217,7 @@ class VGFiles {
 				let $filesInfoImages = $filesInfo.querySelector('.' + this.classes.images);
 				if ($filesInfoImages) {
 					let $images = $filesInfoImages.querySelectorAll('span');
-					if($images.length) {
+					if ($images.length) {
 						for (const $image of $images) {
 							$image.parentNode.removeChild($image);
 						}
@@ -258,7 +258,7 @@ class VGFiles {
 
 function ready() {
 	let $selectors = document.querySelectorAll('.vg-files');
-	if($selectors.length) {
+	if ($selectors.length) {
 		for (const $selector of $selectors) {
 			new VGFiles($selector);
 		}
