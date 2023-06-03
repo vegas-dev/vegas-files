@@ -25,24 +25,40 @@ class VGFiles {
 			this.name = this.container.querySelector('[data-vg-toggle]').getAttribute('name') || undefined;
 			this.accept = this.container.querySelector('[data-vg-toggle]').getAttribute('accept') || undefined;
 
+			this.settings.isImage = this.container.dataset.imagePreview || false;
+			this.settings.Info = this.container.dataset.infoList !== 'false';
+
 			const _this = this;
 
-			document.addEventListener('change', function (event) {
-				let selectors = _this.container.querySelectorAll('[data-vg-toggle="files"]'),
-					element = event.target,
-					index = -1;
-
-
-				while (element && ((index = Array.prototype.indexOf.call(selectors, element)) === -1)) {
-					element = element.parentElement;
-				}
-
-				if (index > -1) {
-					(function () {
-						_this.change(element);
-					}).call(element, event);
-				}
+			listener('change', '[data-vg-toggle="files"]', function (element) {
+				_this.change(element);
 			});
+
+			listener('click', '[data-dismiss="vg-files"]', function (element) {
+				_this.clear('all');
+			});
+
+			function listener(event, el, callback) {
+				document.addEventListener(event, function (e) {
+					let selectors = _this.container.querySelectorAll(el),
+						element = e.target,
+						index = -1;
+
+					while (element && ((index = Array.prototype.indexOf.call(selectors, element)) === -1)) {
+						element = element.parentElement;
+					}
+
+					if (index > -1) {
+						(function () {
+							if (typeof callback === "function") {
+								callback(element);
+							}
+
+							e.preventDefault();
+						}).call(element, e);
+					}
+				});
+			}
 		}
 	}
 
@@ -75,19 +91,8 @@ class VGFiles {
 				let $count = $fileInfo.querySelector('.' + _this.classes.info + '--wrapper-count');
 				if ($count) $count.innerHTML = appended_files.length + '<span>[' + _this.getSizes(appended_files, true) + ']</span>';
 
-				for(let i = 0; i <= appended_files.length - 1; i++) {
-					if(_this.settings.isImage) {
-
-
-						if(this.checkType(appended_files[i].type)) {
-							let src = URL.createObjectURL(appended_files[i]);
-							$fileInfo.querySelector('.' + _this.classes.images).append('<span><img src="'+ src +'" alt="#"></span>')
-						}
-					}
-
-					/*let size = this.getSizes(append_files[i].size);
-					$file_info_name.append('<li><span>'+ (i + 1) + '.</span><span>' + append_files[i].name + '</span><span>['+ size +']</span></li>');*/
-				}
+				_this.setImages(appended_files);
+				_this.setInfoList(appended_files);
 			}
 		}
 	}
@@ -120,6 +125,46 @@ class VGFiles {
 			}
 
 			return arr;
+		}
+	}
+
+	setImages(files) {
+		let _this = this;
+
+		if(_this.settings.isImage) {
+			const $fileInfo = _this.container.querySelector('.' + _this.classes.info);
+			if ($fileInfo) {
+				let $selector = document.createElement('div');
+				$selector.classList.add(_this.classes.images);
+				$fileInfo.prepend($selector);
+
+				for (const file of files) {
+					if(this.checkType(file.type)) {
+						let src = URL.createObjectURL(file);
+						$selector.insertAdjacentHTML('beforeEnd', '<span><img src="'+ src +'" alt="#"></span>');
+					}
+				}
+			}
+		}
+	}
+
+	setInfoList(files) {
+		let _this = this;
+
+		if(_this.settings.isInfo) {
+			const $fileInfo = _this.container.querySelector('.' + _this.classes.info);
+			if ($fileInfo) {
+				let $selector = document.createElement('div');
+				$selector.classList.add(_this.classes.list);
+				$fileInfo.append($selector);
+
+				let i = 1;
+				for (const file of files) {
+					let size = this.getSizes(file.size);
+					$selector.insertAdjacentHTML('beforeEnd', '<li><span>'+ (i) + '.</span><span>' + file.name + '</span><span>['+ size +']</span></li>');
+					i++;
+				}
+			}
 		}
 	}
 
@@ -163,7 +208,7 @@ class VGFiles {
 		return output;
 	}
 
-	clear() {
+	clear(all = false) {
 		const _this = this;
 
 		let $filesInfo = _this.container.querySelector('.' + this.classes.info);
@@ -190,6 +235,23 @@ class VGFiles {
 					}
 				}
 			}
+		}
+
+		if (all) {
+			_this.container.querySelector('[type="file"]').value = '';
+
+			let fakeInputs = _this.container.querySelectorAll('.' + _this.classes.fake);
+			if (fakeInputs.length) {
+				for (const fakeInput of fakeInputs) {
+					fakeInput.remove();
+				}
+			}
+
+			if ($filesInfo) {
+				$filesInfo.classList.remove('show');
+			}
+
+			_this.files = [];
 		}
 	}
 }
