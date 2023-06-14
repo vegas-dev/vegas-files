@@ -35,7 +35,7 @@ class VGFiles {
 			});
 
 			listener('click', '[data-dismiss="vg-files"]', function (element) {
-				_this.clear('all');
+				_this.clear(true);
 			});
 
 			function listener(event, el, callback) {
@@ -134,9 +134,12 @@ class VGFiles {
 		if (_this.settings.isImage) {
 			const $fileInfo = _this.container.querySelector('.' + _this.classes.info);
 			if ($fileInfo) {
-				let $selector = document.createElement('div');
-				$selector.classList.add(_this.classes.images);
-				$fileInfo.prepend($selector);
+				let $selector = $fileInfo.querySelector('.' + _this.classes.images);
+				if (!$selector) {
+					$selector = document.createElement('div');
+					$selector.classList.add(_this.classes.images);
+					$fileInfo.prepend($selector);
+				}
 
 				for (const file of files) {
 					if (this.checkType(file.type)) {
