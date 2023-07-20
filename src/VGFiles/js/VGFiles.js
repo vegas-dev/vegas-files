@@ -1,3 +1,58 @@
+const mergeDeepObject = function (...objects) {
+	const isObject = obj => obj && typeof obj === 'object';
+
+	return objects.reduce((prev, obj) => {
+		Object.keys(obj).forEach(key => {
+			const pVal = prev[key];
+			const oVal = obj[key];
+
+			if (Array.isArray(pVal) && Array.isArray(oVal)) {
+				prev[key] = pVal.concat(...oVal);
+			}
+			else if (isObject(pVal) && isObject(oVal)) {
+				prev[key] = mergeDeepObject(pVal, oVal);
+			}
+			else {
+				prev[key] = oVal;
+			}
+		});
+
+		return prev;
+	}, {});
+}
+
+const listener = function(event, el, callback) {
+	document.addEventListener(event, function (e) {
+		let selectors = document.body.querySelectorAll(el),
+			element = e.target,
+			index = -1;
+
+		while (element && ((index = Array.prototype.indexOf.call(selectors, element)) === -1)) {
+			element = element.parentElement;
+		}
+
+		if (index > -1) {
+			(function () {
+				if (typeof callback === "function") {
+					callback(element);
+				}
+
+				e.preventDefault();
+			}).call(element, e);
+		}
+	});
+}
+
+const defaultParams = {
+	limits: {
+		count: 0,
+		sizes: 0
+	},
+	isImage: false,
+	isInfo: true,
+	types: ['image/png', "image/jpeg", "image/bmp", "image/ico", "image/gif", "image/jfif", "image/tiff"]
+}
+
 class VGFiles {
 	constructor(container, arg = {}) {
 		this.container = container || undefined;
@@ -9,57 +64,31 @@ class VGFiles {
 			list: 'vg-files-info--list',
 			fake: 'vg-files-fake'
 		};
-		this.settings = Object.assign({
-			limits: {
-				count: 0,
-				sizes: 0
-			},
-			isImage: false,
-			isInfo: true,
-			types: ['image/png', "image/jpeg", "image/bmp", "image/ico", "image/gif", "image/jfif", "image/tiff"]
-		}, arg);
+		this.settings = mergeDeepObject(defaultParams, arg);
 		this.files = [];
 
 		if (this.container) {
-			this.id = this.container.querySelector('[data-vg-toggle]').getAttribute('id') || undefined;
-			this.name = this.container.querySelector('[data-vg-toggle]').getAttribute('name') || undefined;
-			this.accept = this.container.querySelector('[data-vg-toggle]').getAttribute('accept') || undefined;
-
-			this.settings.isImage = this.container.dataset.imagePreview || false;
-			this.settings.Info = this.container.dataset.infoList !== 'false';
-
-			const _this = this;
-
-			listener('change', '[data-vg-toggle="files"]', function (element) {
-				_this.change(element);
-			});
-
-			listener('click', '[data-dismiss="vg-files"]', function (element) {
-				_this.clear(true);
-			});
-
-			function listener(event, el, callback) {
-				document.addEventListener(event, function (e) {
-					let selectors = _this.container.querySelectorAll(el),
-						element = e.target,
-						index = -1;
-
-					while (element && ((index = Array.prototype.indexOf.call(selectors, element)) === -1)) {
-						element = element.parentElement;
-					}
-
-					if (index > -1) {
-						(function () {
-							if (typeof callback === "function") {
-								callback(element);
-							}
-
-							e.preventDefault();
-						}).call(element, e);
-					}
-				});
-			}
+			this.init();
 		}
+	}
+
+	init() {
+		const _this = this;
+
+		_this.id =     _this.container.querySelector('[data-vg-toggle]').getAttribute('id') || undefined;
+		_this.name =   _this.container.querySelector('[data-vg-toggle]').getAttribute('name') || undefined;
+		_this.accept = _this.container.querySelector('[data-vg-toggle]').getAttribute('accept') || undefined;
+
+		_this.settings.isImage = _this.container.dataset.imagePreview === 'true' || false;
+		_this.settings.isInfo =  _this.container.dataset.infoList !== 'false';
+
+		listener('change', '[data-vg-toggle="files"]', function (element) {
+			_this.change(element);
+		});
+
+		listener('click', '[data-dismiss="vg-files"]', function (element) {
+			_this.clear(true);
+		});
 	}
 
 	change(self) {
@@ -157,14 +186,17 @@ class VGFiles {
 		if (_this.settings.isInfo) {
 			const $fileInfo = _this.container.querySelector('.' + _this.classes.info);
 			if ($fileInfo) {
-				let $selector = document.createElement('div');
-				$selector.classList.add(_this.classes.list);
-				$fileInfo.append($selector);
+				let $list = $fileInfo.querySelector('.' + _this.classes.list);
+				if (!$list) {
+					$list = document.createElement('ul');
+					$list.classList.add(_this.classes.list);
+					$fileInfo.append($list);
+				}
 
 				let i = 1;
 				for (const file of files) {
 					let size = this.getSizes(file.size);
-					$selector.insertAdjacentHTML('beforeEnd', '<li><span>'+ (i) + '.</span><span>' + file.name + '</span><span>['+ size +']</span></li>');
+					$list.insertAdjacentHTML('beforeEnd', '<li><span>'+ (i) + '.</span><span>' + file.name + '</span><span>['+ size +']</span></li>');
 					i++;
 				}
 			}
@@ -214,10 +246,10 @@ class VGFiles {
 	clear(all = false) {
 		const _this = this;
 
-		let $filesInfo = _this.container.querySelector('.' + this.classes.info);
+		let $filesInfo = _this.container.querySelector('.' + _this.classes.info);
 		if ($filesInfo) {
 			if (_this.settings.isImage) {
-				let $filesInfoImages = $filesInfo.querySelector('.' + this.classes.images);
+				let $filesInfoImages = $filesInfo.querySelector('.' + _this.classes.images);
 				if ($filesInfoImages) {
 					let $images = $filesInfoImages.querySelectorAll('span');
 					if ($images.length) {
@@ -227,9 +259,11 @@ class VGFiles {
 					}
 				}
 			}
+
 			if (_this.settings.isInfo) {
-				let $filesInfoList = $filesInfo.querySelector('.' + this.classes.list);
+				let $filesInfoList = $filesInfo.querySelector('.' + _this.classes.list);
 				if ($filesInfoList) {
+					console.log($filesInfoList)
 					let $li = $filesInfoList.querySelectorAll('li');
 					if ($li.length) {
 						for (const $item of $li) {
