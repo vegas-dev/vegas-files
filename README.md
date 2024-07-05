@@ -1,17 +1,17 @@
-# vegas-rollup
+# vegas-files
 Hides/Shows the hidden part of the content
 
-[![npm](https://img.shields.io/npm/v/vgrollup.svg?style=flat-square&maxAge=600)](https://www.npmjs.com/package/vgrollup) [![npm](https://img.shields.io/npm/l/vgrollup.svg?style=flat-square)]()
+[![npm](https://img.shields.io/npm/v/vgfiles.svg?style=flat-square&maxAge=600)](https://www.npmjs.com/package/vgfiles) [![npm](https://img.shields.io/npm/l/vgfiles.svg?style=flat-square)]()
 
 ## Demo
-https://vegas-dev.github.io/vegas-rollup/
+https://vegas-dev.github.io/vegas-files/
 
 ## Install
 ```
-npm i vgrollup
+npm i vgfiles
 ```
 
-or download [here](https://github.com/vegas-dev/vegas-rollup/archive/master.zip)
+or download [here](https://github.com/vegas-dev/vegas-files/archive/master.zip)
 
 ## Authors
 
