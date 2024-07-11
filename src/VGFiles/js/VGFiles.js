@@ -68,6 +68,7 @@ class VGFiles {
 		this.files = [];
 
 		if (this.container) {
+			this.isInitChange = false;
 			this.init();
 		}
 	}
@@ -82,13 +83,14 @@ class VGFiles {
 		_this.settings.isImage = _this.container.dataset.imagePreview === 'true' || false;
 		_this.settings.isInfo =  _this.container.dataset.infoList !== 'false';
 
-		listener('change', '[data-vg-toggle="files"]', function (element) {
-			_this.change(element);
-		});
+		_this.changeListener();
 
-		listener('click', '[data-dismiss="vg-files"]', function (element) {
+		let $dismiss = _this.container.querySelector('[data-dismiss="vg-files"]');
+		$dismiss.onclick = function () {
 			_this.clear(true);
-		});
+
+			return false;
+		}
 	}
 
 	change(self) {
@@ -109,6 +111,8 @@ class VGFiles {
 				let accept = _this.accept ? 'accept="' + _this.accept + '"' : '';
 
 				_this.container.insertAdjacentHTML('beforeEnd', '<input type="file" name="'+ _this.name +'" id="'+ _this.id +'" data-vg-toggle="files" ' + accept + ' multiple>');
+
+				_this.changeListener();
 			}
 
 			appended_files = _this.append(values);
@@ -124,6 +128,17 @@ class VGFiles {
 				_this.setInfoList(appended_files);
 			}
 		}
+	}
+
+	changeListener() {
+		const _this = this;
+
+		let $toggle = _this.container.querySelectorAll('[data-vg-toggle="files"]');
+		[...$toggle].forEach(function (el) {
+			el.addEventListener('change', function () {
+				_this.change(this)
+			})
+		})
 	}
 
 	append(values) {
@@ -263,7 +278,6 @@ class VGFiles {
 			if (_this.settings.isInfo) {
 				let $filesInfoList = $filesInfo.querySelector('.' + _this.classes.list);
 				if ($filesInfoList) {
-					console.log($filesInfoList)
 					let $li = $filesInfoList.querySelectorAll('li');
 					if ($li.length) {
 						for (const $item of $li) {
