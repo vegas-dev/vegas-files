@@ -76,12 +76,14 @@ class VGFiles {
 	init() {
 		const _this = this;
 
-		_this.id =     _this.container.querySelector('[data-vg-toggle]').getAttribute('id') || undefined;
-		_this.name =   _this.container.querySelector('[data-vg-toggle]').getAttribute('name') || undefined;
+		_this.id     = _this.container.querySelector('[data-vg-toggle]').getAttribute('id') || undefined;
+		_this.name   = _this.container.querySelector('[data-vg-toggle]').getAttribute('name') || undefined;
 		_this.accept = _this.container.querySelector('[data-vg-toggle]').getAttribute('accept') || undefined;
 
-		_this.settings.isImage = _this.container.dataset.imagePreview === 'true' || false;
-		_this.settings.isInfo =  _this.container.dataset.infoList !== 'false';
+		_this.settings.isImage      =  _this.container.dataset.imagePreview === 'true' || false;
+		_this.settings.isInfo       =  _this.container.dataset.infoList !== 'false';
+		_this.settings.limits.count =  parseInt(_this.container.dataset.limitCount) || 0;
+		_this.settings.limits.sizes =  parseInt(_this.container.dataset.limitSize) || 0;
 
 		_this.changeListener();
 
