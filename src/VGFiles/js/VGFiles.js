@@ -50,7 +50,7 @@ const defaultParams = {
 	},
 	isImage: false,
 	isInfo: true,
-	types: ['image/png', "image/jpeg", "image/bmp", "image/ico", "image/gif", "image/jfif", "image/tiff"]
+	types: ['image/png', "image/jpeg", "image/bmp", "image/ico", "image/gif", "image/jfif", "image/tiff", "image/webp"]
 }
 
 class VGFiles {
